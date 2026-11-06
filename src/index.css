@@ -1,0 +1,637 @@
+/* =============================================
+   Global CSS Variables & Design System
+   ============================================= */
+:root {
+  --bg: #05030f;
+  --purple: #a855f7;
+  --purple-dark: #7c3aed;
+  --white: #ffffff;
+
+  --bg-primary: var(--bg);
+  --bg-secondary: #0a0618;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(168, 85, 247, 0.09);
+  --purple-primary: var(--purple);
+  --purple-light: #c084fc;
+  --purple-glow: rgba(168, 85, 247, 0.4);
+  --purple-glow-light: rgba(168, 85, 247, 0.18);
+  --text-primary: var(--white);
+  --text-secondary: #a3a1b8;
+  --text-muted: #6b6885;
+  --border-color: rgba(168, 85, 247, 0.18);
+  --border-hover: rgba(168, 85, 247, 0.55);
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-hero-name: 'Plus Jakarta Sans', sans-serif;
+  /* ── Hero shared typography ── */
+  --font-hero: 'Plus Jakarta Sans', sans-serif;
+  --hero-title-size: clamp(2.3rem, 4.1vw, 4.75rem);
+  --hero-fullstack-size: clamp(1.84rem, 3.28vw, 3.8rem); /* 80% of --hero-title-size */
+  --hero-title-weight: 800;
+  --hero-title-leading: 0.95;
+  --hero-title-tracking: 0.005em;
+  --hero-eyebrow-size: clamp(0.95rem, 1.1vw, 1.15rem);
+  --hero-eyebrow-weight: 600;
+  --hero-eyebrow-leading: 1.1;
+  --hero-eyebrow-tracking: 0.04em;
+  --nav-height: 64px;
+  /* Shared container — navbar and hero-inner use the same values */
+  --container-max: 1200px;
+  --container-pad: 24px;
+  --font-display: var(--font-heading);
+  --font-primary: var(--font-body);
+  --font-secondary: var(--font-body);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Shared premium easing — used by all interactive elements */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-hover: 0.35s;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --shadow-purple: 0 0 30px rgba(168, 85, 247, 0.3);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* =============================================
+   Reset & Base
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Sticky footer flex container */
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  position: relative;
+}
+
+main {
+  flex: 1 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* =============================================
+   Scrollbar Styling
+   ============================================= */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--purple-dark);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--purple-primary);
+}
+
+/* =============================================
+   Utility Classes
+   ============================================= */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.section {
+  padding: 100px 0;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(147, 51, 234, 0.12);
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--purple-light);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 3.4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  background: linear-gradient(135deg, var(--white) 0%, #e9d5ff 60%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+/* =============================================
+   Interactive Elements — Shared Premium Hover System
+   Applies automatically to all existing & future buttons / nav items.
+   ============================================= */
+a.btn-primary,
+a.btn-outline,
+a.social-link-btn,
+a.chat-link-btn,
+a.project-link-btn,
+button,
+[role="button"],
+.nav-link,
+.social-icon,
+.btn-primary,
+.btn-outline,
+.tab-btn,
+.hamburger {
+  border: 2px solid transparent;
+  transition:
+    border-color var(--duration-hover) var(--ease-premium),
+    background-color var(--duration-hover) var(--ease-premium),
+    background var(--duration-hover) var(--ease-premium),
+    color var(--duration-hover) var(--ease-premium),
+    box-shadow var(--duration-hover) var(--ease-premium),
+    transform var(--duration-hover) var(--ease-premium),
+    opacity var(--duration-hover) var(--ease-premium);
+}
+
+/* =============================================
+   btn-primary — premium hover with shine sweep
+   ============================================= */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+  color: white;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 2px solid transparent;
+  transition:
+    border-color var(--duration-hover) var(--ease-premium),
+    background var(--duration-hover) var(--ease-premium),
+    box-shadow var(--duration-hover) var(--ease-premium),
+    transform var(--duration-hover) var(--ease-premium);
+  cursor: pointer;
+  font-family: var(--font-body);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine sweep pseudo-element */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-position: -200% center;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.btn-primary:hover::after {
+  opacity: 1;
+  animation: btnShine 0.7s var(--ease-premium) forwards;
+}
+
+@keyframes btnShine {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+/* Arrow / icon slide on hover */
+.btn-primary svg,
+.btn-outline svg {
+  transition: transform var(--duration-hover) var(--ease-premium);
+}
+
+.btn-primary:hover svg,
+.btn-outline:hover svg {
+  transform: translate(4px, -4px);
+}
+
+.btn-primary:hover {
+  border-color: #a855f7;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px var(--purple-glow);
+  background: linear-gradient(135deg, var(--purple), #c084fc);
+}
+
+/* Press-down effect */
+.btn-primary:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+/* Focus visible — keyboard users */
+.btn-primary:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 3px;
+}
+
+
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  transition:
+    border-color var(--duration-hover) var(--ease-premium),
+    background-color var(--duration-hover) var(--ease-premium),
+    box-shadow var(--duration-hover) var(--ease-premium),
+    transform var(--duration-hover) var(--ease-premium);
+  cursor: pointer;
+  font-family: var(--font-body);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine for outline too */
+.btn-outline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(168, 85, 247, 0.12) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-position: -200% center;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.btn-outline:hover::after {
+  opacity: 1;
+  animation: btnShine 0.7s var(--ease-premium) forwards;
+}
+
+.btn-outline:hover {
+  border-color: #a855f7;
+  background-color: rgba(168, 85, 247, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+}
+
+.btn-outline:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+.btn-outline:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 3px;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid var(--border-color);
+  color: var(--purple-light);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.skill-tag:hover {
+  background: rgba(168, 85, 247, 0.25);
+  border-color: var(--purple);
+  color: #fff;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+/* =============================================
+   Background Orbs (Soft, subtle purple radial glows)
+   ============================================= */
+.bg-orbs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+/* Top-left corner subtle glow */
+.orb-1 {
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, #a855f7 0%, #7c3aed 50%, transparent 70%);
+  top: -200px;
+  left: -200px;
+  animation: orbFloat 10s ease-in-out infinite;
+}
+
+/* Bottom right ambient glow */
+.orb-2 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #7c3aed 0%, #6366f1 45%, transparent 70%);
+  bottom: -150px;
+  right: -150px;
+  animation: orbFloat 12s ease-in-out infinite -4s;
+}
+
+/* Subtle mid-page ambient */
+.orb-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #9333ea 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat 14s ease-in-out infinite -7s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+/* =============================================
+   Scroll Progress Bar
+   ============================================= */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--purple-dark), var(--purple), var(--purple-light));
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 99999;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* =============================================
+   Global Reveal Animation System
+   Elements are only hidden when .js class is on <html>
+   (i.e., JavaScript is running).
+   ============================================= */
+
+/* Variants — only apply when JS is available */
+html.js [data-animate] {
+  opacity: 0;
+  transform: translateY(32px); /* Default fade-up */
+  will-change: opacity, transform, filter;
+  transition:
+    opacity 0.8s var(--ease-premium),
+    transform 0.8s var(--ease-premium),
+    filter 0.8s var(--ease-premium);
+  transition-delay: calc(var(--i, 0) * 80ms + var(--reveal-delay, 0s));
+}
+
+html.js [data-animate="fade-up"] {
+  transform: translateY(32px);
+}
+
+html.js [data-animate="fade-left"] {
+  transform: translateX(-32px);
+}
+
+html.js [data-animate="fade-right"] {
+  transform: translateX(32px);
+}
+
+html.js [data-animate="scale-in"] {
+  transform: scale(0.94);
+}
+
+html.js [data-animate="blur-in"] {
+  transform: scale(1.04);
+  filter: blur(8px);
+}
+
+/* Revealed state — same for all variants */
+html.js [data-animate].revealed {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* =============================================
+   Animations
+   ============================================= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--purple-glow); }
+  50% { box-shadow: 0 0 40px var(--purple-glow), 0 0 80px rgba(147, 51, 234, 0.1); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (max-width: 768px) {
+  .section {
+    padding: 70px 0;
+  }
+
+  :root {
+    --container-pad: 16px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Show revealed elements immediately for reduced motion */
+  html.js [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  /* Keep color transitions for reduced-motion; remove lift and shine */
+  .btn-primary,
+  .btn-outline {
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease,
+      color 0.15s ease !important;
+  }
+
+  .btn-primary:hover,
+  .btn-outline:hover {
+    transform: none !important;
+  }
+
+  .btn-primary::after,
+  .btn-outline::after {
+    display: none !important;
+  }
+}
+
+/* Section Dividers */
+section:not(:last-child) {
+  border-bottom: 1px solid rgba(147, 51, 234, 0.05);
+}

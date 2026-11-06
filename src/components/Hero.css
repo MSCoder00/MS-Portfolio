@@ -1,0 +1,973 @@
+/* =============================================
+   Hero Section — TARGET DESIGN
+   ============================================= */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0 60px;
+  background-color: var(--bg);
+  background: radial-gradient(ellipse at 50% 100%, #0c0720 0%, #05030f 75%);
+}
+
+/* =============================================
+   Background Subtle Radial Glows
+   ============================================= */
+.hero-bg-glows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Soft purple radial glow at top-left corner */
+.hero-glow-top-left {
+  position: absolute;
+  top: -120px;
+  left: -120px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(124, 58, 237, 0.12) 45%, transparent 70%);
+  filter: blur(85px);
+  animation: glowPulseSlow 9s ease-in-out infinite alternate;
+}
+
+/* 3-Column Grid: equal 1fr side cols | auto center col */
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  column-gap: clamp(16px, 2vw, 36px);
+  position: relative;
+  z-index: 2;
+}
+
+/* =============================================
+   Mask Reveal System for Lines
+   ============================================= */
+.hero-mask-wrap {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 4px;
+}
+
+.hero-mask-item {
+  display: block;
+  opacity: 0;
+  transform: translateY(115%);
+  will-change: transform, opacity;
+  animation: heroLineReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroLineReveal {
+  from {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger Delays for Left Column */
+.hero-anim-greeting {
+  animation-delay: 0.35s;
+}
+
+.hero-anim-name-1 {
+  animation-delay: 0.48s;
+}
+
+.hero-anim-name-2 {
+  animation-delay: 0.62s;
+}
+
+/* Stagger Delays for Right Column */
+.hero-anim-role-label {
+  animation-delay: 0.42s;
+}
+
+.hero-anim-role-grad {
+  animation-delay: 0.56s;
+}
+
+.hero-anim-role-solid {
+  animation-delay: 0.70s;
+}
+
+/* =============================================
+   LEFT COLUMN — Greeting + Name (Left-Aligned)
+   ============================================= */
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  justify-self: start;
+  min-width: 0;
+}
+
+/* "Hello, I'm" — eyebrow label */
+.hero-greeting {
+  font-family: var(--font-hero);
+  font-size: var(--hero-eyebrow-size);
+  color: var(--purple);
+  font-weight: var(--hero-eyebrow-weight);
+  line-height: var(--hero-eyebrow-leading);
+  margin-bottom: 10px;
+  letter-spacing: var(--hero-eyebrow-tracking);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* <h1> wrapper — layout only, no font-size so spans control their own size */
+.hero-name {
+  display: flex;
+  flex-direction: column;
+  /* Reset the global h1 rule so .name-line can set its own size */
+  font-family: var(--font-hero);
+  font-size: var(--hero-title-size);
+  font-weight: var(--hero-title-weight);
+  line-height: var(--hero-title-leading);
+  letter-spacing: var(--hero-title-tracking);
+  color: #ffffff;
+  text-align: left;
+  overflow-wrap: break-word;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  /* Optical side-bearing correction: visible letter edge aligns with logo */
+  margin-left: -0.03em;
+  margin-bottom: 0;
+}
+
+/* "MD" / "Shifat" spans — inherit everything from .hero-name */
+.name-line {
+  display: block;
+  font-family: var(--font-hero);
+  font-size: var(--hero-title-size);
+  font-weight: var(--hero-title-weight);
+  line-height: var(--hero-title-leading);
+  letter-spacing: var(--hero-title-tracking);
+  color: #ffffff;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+}
+
+/* =============================================
+   CENTER COLUMN — Portrait Photo with Blur-to-Sharp
+   ============================================= */
+.hero-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-img-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Blue-violet radial glow BEHIND the head — fades in last */
+.hero-head-glow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(59, 43, 255, 0.55) 0%,
+    rgba(124, 58, 237, 0.45) 30%,
+    rgba(168, 85, 247, 0.25) 55%,
+    transparent 75%
+  );
+  filter: blur(60px);
+}
+
+/* Soft purple glows behind the shoulders — fades in last */
+.hero-shoulder-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(65px);
+}
+
+.hero-shoulder-glow.left {
+  bottom: 15%;
+  left: -20%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(124, 58, 237, 0.2) 50%, transparent 70%);
+}
+
+.hero-shoulder-glow.right {
+  bottom: 15%;
+  right: -20%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.42) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 70%);
+}
+
+/* Photo Entrance: fades and scales in from 0.94 to 1 with soft blur-to-sharp transition */
+.hero-anim-photo {
+  opacity: 0;
+  transform: scale(0.94);
+  filter: blur(14px);
+  will-change: transform, opacity, filter;
+  animation: heroPhotoEntrance 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+
+@keyframes heroPhotoEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+    filter: blur(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Glow behind photo fades in LAST (delay 0.85s) */
+.hero-anim-glow {
+  opacity: 0;
+  animation: heroGlowFadeIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.85s forwards;
+}
+
+@keyframes heroGlowFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Photo wrapper — transparent cutout, from chest up */
+.hero-img-wrapper {
+  position: relative;
+  width: clamp(270px, 29vw, 420px);
+  max-height: calc(100vh - 160px);
+  aspect-ratio: 1 / 1.22;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* Transparent PNG/WebP cutout */
+.hero-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+}
+
+/* Seamless bottom fade overlay */
+.hero-img-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 38%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(5, 3, 15, 0.7) 60%, #05030f 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =============================================
+   RIGHT COLUMN — Creative Full-Stack Developer
+   ============================================= */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: left;
+  justify-self: end;
+  min-width: 0;
+  position: relative;
+}
+
+/* Wrapper block grouping Creative + Heading, pushed to the right edge */
+.hero-role-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin-left: auto;
+  position: relative;
+  /* Soft purple glow behind the whole block */
+  filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.45));
+}
+
+/* Ambient purple glow centered behind role text block */
+.hero-role-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(220px, 22vw, 340px);
+  height: clamp(120px, 12vw, 180px);
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, rgba(124, 58, 237, 0.2) 50%, transparent 70%);
+  filter: blur(45px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* "Creative" — eyebrow label */
+.hero-role-label {
+  display: inline-block;
+  font-family: var(--font-hero);
+  font-size: var(--hero-eyebrow-size);
+  color: #c4b5e8;
+  font-weight: var(--hero-eyebrow-weight);
+  line-height: var(--hero-eyebrow-leading);
+  margin-bottom: 10px;
+  letter-spacing: var(--hero-eyebrow-tracking);
+  text-shadow: 0 0 16px rgba(196, 181, 253, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-role-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  min-width: 0;
+  max-width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* "Full-Stack" — gradient clipped to text, NO filter on this element */
+.role-gradient {
+  display: block;
+  font-family: var(--font-hero);
+  font-size: var(--hero-fullstack-size); /* ~80% of Developer's size */
+  font-weight: 700;                      /* slightly lighter than Developer's 800 */
+  line-height: var(--hero-title-leading);
+  letter-spacing: var(--hero-title-tracking);
+  background: linear-gradient(180deg, #a855f7 0%, #c9a0fb 55%, #efe3ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+  overflow-wrap: break-word;
+  white-space: nowrap;
+}
+
+/* "Developer" — solid white, tuned so width and right edge match Full-Stack */
+.role-solid {
+  display: block;
+  font-family: var(--font-hero);
+  font-size: var(--hero-title-size);
+  font-weight: var(--hero-title-weight);
+  line-height: var(--hero-title-leading);
+  letter-spacing: var(--hero-title-tracking);
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+  overflow-wrap: break-word;
+  white-space: nowrap;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* =============================================
+   UPside Text Reveal System (Continuous Upward Loop)
+   ============================================= */
+.role-mask-wrap {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 4px;
+}
+
+.role-reveal-item {
+  display: block;
+  will-change: transform, opacity;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* State 1: Hidden below mask (waiting to reveal upwards) */
+.role-reveal-item.state-hidden-bottom {
+  transform: translateY(115%);
+  opacity: 0;
+  transition: none !important;
+}
+
+/* State 2: Revealed UP (resting visible) */
+.role-reveal-item.state-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* State 3: Exiting UP (sliding upwards out of view) */
+.role-reveal-item.state-hidden-top {
+  transform: translateY(-115%);
+  opacity: 0;
+  transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Stagger Delays for UPward Entrance */
+.state-visible.delay-role-label {
+  transition-delay: 0.05s;
+}
+
+.state-visible.delay-role-grad {
+  transition-delay: 0.18s;
+}
+
+.state-visible.delay-role-solid {
+  transition-delay: 0.32s;
+}
+
+/* Stagger Delays for UPward Exit */
+.state-hidden-top.delay-role-label {
+  transition-delay: 0.0s;
+}
+
+.state-hidden-top.delay-role-grad {
+  transition-delay: 0.10s;
+}
+
+.state-hidden-top.delay-role-solid {
+  transition-delay: 0.20s;
+}
+
+/* Ambient glow subtle pulses */
+@keyframes glowPulseSlow {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* =============================================
+   Responsive Design
+   Tablet (768px–1023px): 3-column grid matching desktop layout, scaled for tablet.
+   Mobile (≤767px): same 3-column grid at phone scale.
+   ============================================= */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* ── Hero section shell: clear fixed navbar & 60% viewport height ── */
+  .hero {
+    --nav-height: 64px;
+    --hero-title-size:     clamp(1.8rem, 5vw, 3rem);
+    --hero-fullstack-size: clamp(1.44rem, 4vw, 2.4rem);
+    --hero-title-weight:   800;
+    --hero-title-leading:  1;
+    --hero-title-tracking: 0em;
+
+    --hero-eyebrow-size:     clamp(0.9rem, 2vw, 1.2rem);
+    --hero-eyebrow-weight:   600;
+    --hero-eyebrow-leading:  1.1;
+    --hero-eyebrow-tracking: 0em;
+
+    min-height: 60vh;
+    min-height: 60svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: calc(var(--nav-height) + 24px);
+    padding-bottom: 24px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* ── 3-col grid, same structure as desktop ── */
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(16px, 3vw, 32px);
+    padding: 0 32px;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── Column 1: LEFT block — left-aligned, flush with logo ── */
+  .hero-left {
+    order: unset;
+    grid-column: 1;
+    min-width: 0;
+    justify-self: start;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-greeting {
+    font-size: var(--hero-eyebrow-size);
+    font-weight: var(--hero-eyebrow-weight);
+    line-height: var(--hero-eyebrow-leading);
+    letter-spacing: var(--hero-eyebrow-tracking);
+    margin-bottom: 8px;
+  }
+
+  .hero-name {
+    font-size: var(--hero-title-size);
+    font-weight: var(--hero-title-weight);
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    margin-left: 0;
+    margin-bottom: 0;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .name-line {
+    font-size: var(--hero-title-size);
+    font-weight: var(--hero-title-weight);
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    white-space: nowrap;
+  }
+
+  /* ── Column 2: CENTER photo — strictly in middle auto column ── */
+  .hero-center {
+    order: unset;
+    grid-column: 2;
+    position: static;
+    justify-self: center;
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Photo container: ~261px at 768px */
+  .hero-img-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(220px, 34vw, 300px);
+    margin: 0 auto;
+  }
+
+  .hero-img-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 1 / 1.22;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Head glow centered on photo */
+  .hero-head-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(285px, 44vw, 390px);
+    height: clamp(285px, 44vw, 390px);
+    filter: blur(50px);
+    opacity: 0.70;
+  }
+
+  /* Show shoulder glows on tablet */
+  .hero-shoulder-glow {
+    display: block;
+  }
+
+  /* ── Column 3: RIGHT block — right-aligned in grid, text left-aligned inside ── */
+  .hero-right {
+    order: unset;
+    grid-column: 3;
+    min-width: 0;
+    justify-self: end;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-role-block {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+    filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.4));
+  }
+
+  .hero-role-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+  }
+
+  .hero-role-label {
+    font-size: var(--hero-eyebrow-size);
+    font-weight: var(--hero-eyebrow-weight);
+    line-height: var(--hero-eyebrow-leading);
+    letter-spacing: var(--hero-eyebrow-tracking);
+    margin-bottom: 8px;
+  }
+
+  .role-gradient {
+    font-size: var(--hero-fullstack-size);
+    font-weight: 700;
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    white-space: nowrap;
+  }
+
+  .role-solid {
+    font-size: var(--hero-title-size);
+    font-weight: var(--hero-title-weight);
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    white-space: nowrap;
+  }
+
+  .hero-role-glow {
+    width: clamp(140px, 20vw, 220px);
+    height: clamp(80px, 12vw, 130px);
+    filter: blur(35px);
+  }
+
+  /* Mask wraps: allow a little breathing room */
+  .hero-mask-wrap,
+  .role-mask-wrap {
+    padding-bottom: 2px;
+  }
+}
+
+/* =============================================
+   MOBILE — 3-column grid (≤ 767px)
+   Mirrors desktop layout scaled to phone width.
+   Overrides the stacked tablet rules above.
+   ============================================= */
+@media (max-width: 767px) {
+  /* ── Hero section shell: clear fixed navbar & 60% viewport height ── */
+  .hero {
+    --nav-height: 64px;
+    --hero-title-size:     clamp(0.9rem, 5.2vw, 1.5rem);
+    --hero-fullstack-size: clamp(0.75rem, 4.2vw, 1.2rem);
+    --hero-title-weight:   800;
+    --hero-title-leading:  1;
+    --hero-title-tracking: 0em;
+
+    --hero-eyebrow-size:     clamp(0.6rem, 3vw, 0.9rem);
+    --hero-eyebrow-weight:   600;
+    --hero-eyebrow-leading:  1.1;
+    --hero-eyebrow-tracking: 0em;
+
+    min-height: 60vh;
+    min-height: 60svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: calc(var(--nav-height) + 16px);
+    padding-bottom: 16px;
+    box-sizing: border-box;
+    overflow: hidden; /* prevent glow bleed causing horizontal scroll */
+  }
+
+  /* ── 3-col grid, same structure as desktop ── */
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 0;
+    padding: 0 16px;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── Column 1: LEFT block — left-aligned, flush with logo ── */
+  /* overflow: visible so text can extend into the photo's soft-faded edges */
+  .hero-left {
+    grid-column: 1;
+    min-width: 0;
+    overflow: visible;
+    justify-self: start;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    position: relative;
+    z-index: 2; /* text sits above photo */
+  }
+
+  .hero-greeting {
+    font-size: var(--hero-eyebrow-size);
+    font-weight: var(--hero-eyebrow-weight);
+    line-height: var(--hero-eyebrow-leading);
+    letter-spacing: var(--hero-eyebrow-tracking);
+    margin-bottom: 4px;
+  }
+
+  .hero-name {
+    font-size: var(--hero-title-size);
+    font-weight: var(--hero-title-weight);
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    margin-left: 0;
+    margin-bottom: 0;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .name-line {
+    font-size: var(--hero-title-size);
+    font-weight: var(--hero-title-weight);
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    white-space: nowrap;
+  }
+
+  /* ── Column 2: CENTER photo — strictly in middle auto column ── */
+  /* z-index: 1 so text columns (z-index: 2) always appear above the photo */
+  .hero-center {
+    grid-column: 2;
+    position: static;
+    justify-self: center;
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Photo container: ~166px at 360px (up from ~94px) */
+  .hero-img-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(150px, 46vw, 220px);
+    margin: 0 auto;
+  }
+
+  .hero-img-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 1 / 1.22;
+    margin: 0;
+    overflow: visible;
+    /* Horizontal soft-fade: edges blend into background so overlap with text looks natural */
+    mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 18%, black 82%, transparent 100%);
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Head glow: ~150% of photo width, centered on photo */
+  .hero-head-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(225px, 69vw, 330px);
+    height: clamp(225px, 69vw, 330px);
+    filter: blur(35px);
+    opacity: 0.55; /* moderate — won't wash out text */
+  }
+
+  /* Hide shoulder glows on mobile to avoid washing out text */
+  .hero-shoulder-glow {
+    display: none;
+  }
+
+  /* ── Column 3: RIGHT block — right-aligned in grid, text left-aligned inside ── */
+  /* overflow: visible so text can extend into the photo's soft-faded edges */
+  .hero-right {
+    grid-column: 3;
+    min-width: 0;
+    overflow: visible;
+    justify-self: end;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    position: relative;
+    z-index: 2; /* text sits above photo */
+  }
+
+  .hero-role-block {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+    filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.35));
+  }
+
+  .hero-role-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+  }
+
+  .hero-role-label {
+    font-size: var(--hero-eyebrow-size);
+    font-weight: var(--hero-eyebrow-weight);
+    line-height: var(--hero-eyebrow-leading);
+    letter-spacing: var(--hero-eyebrow-tracking);
+    margin-bottom: 4px;
+  }
+
+  .role-gradient {
+    font-size: var(--hero-fullstack-size);
+    font-weight: 700;
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    white-space: nowrap;
+  }
+
+  .role-solid {
+    font-size: var(--hero-title-size);
+    font-weight: var(--hero-title-weight);
+    line-height: var(--hero-title-leading);
+    letter-spacing: var(--hero-title-tracking);
+    white-space: nowrap;
+  }
+
+  .hero-role-glow {
+    width: clamp(60px, 16vw, 90px);
+    height: clamp(35px, 10vw, 55px);
+    filter: blur(25px);
+  }
+
+  /* Tighten mask wraps on mobile */
+  .hero-mask-wrap,
+  .role-mask-wrap {
+    padding-bottom: 0;
+  }
+}
+
+/* =============================================
+   SAFETY NET FOR NARROW SCREENS (< 340px)
+   Fallback to stacked centered layout if 3 cols can't fit
+   ============================================= */
+@media (max-width: 339px) {
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 0 12px;
+    text-align: center;
+  }
+
+  .hero-left,
+  .hero-center,
+  .hero-right {
+    width: 100%;
+    justify-self: unset;
+    align-items: center;
+  }
+
+  .hero-center { order: 1; }
+  .hero-left   { order: 2; align-items: center; text-align: center; }
+  .hero-right  { order: 3; align-items: center; text-align: center; }
+
+  .hero-name,
+  .hero-role-block,
+  .hero-role-heading {
+    align-items: center;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .hero-img-container {
+    width: clamp(70px, 40vw, 95px);
+  }
+
+  .name-line,
+  .role-gradient,
+  .role-solid {
+    white-space: normal;
+  }
+}
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-mask-item,
+  .role-reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .hero-anim-photo {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+
+  .hero-anim-glow {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

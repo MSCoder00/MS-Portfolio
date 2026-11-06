@@ -1,0 +1,392 @@
+/* =============================================
+   Experience Section Styles
+   ============================================= */
+.experience {
+  position: relative;
+}
+
+.experience-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.experience-subtitle {
+  color: var(--text-secondary);
+  font-size: 16px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* =============================================
+   Tab Selector with Sliding Pill
+   ============================================= */
+.tab-selector {
+  position: relative;
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  padding: 6px;
+  width: fit-content;
+  margin: 0 auto 48px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Sliding Purple Pill behind tabs */
+.tab-pill {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  background: linear-gradient(135deg, var(--purple-dark), var(--purple-primary));
+  border-radius: 100px;
+  box-shadow: 0 4px 15px var(--purple-glow);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tab-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
+  font-family: var(--font-heading);
+  user-select: none;
+}
+
+.tab-btn:hover {
+  color: #ffffff;
+  border-color: rgba(168, 85, 247, 0.35);
+}
+
+.tab-btn.active {
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.tab-btn:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
+/* =============================================
+   Animated Timeline Container
+   ============================================= */
+.timeline-container-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+/* =============================================
+   Tab Switching Animations (directional)
+   ============================================= */
+
+/* Going Exp -> Edu: old slides LEFT, new enters from RIGHT */
+.timeline.anim-exiting.dir-forward .timeline-item {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline.anim-entering.dir-forward .timeline-item {
+  animation: slideInFromRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 90ms) both;
+}
+
+/* Going Edu -> Exp: old slides RIGHT, new enters from LEFT */
+.timeline.anim-exiting.dir-backward .timeline-item {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline.anim-entering.dir-backward .timeline-item {
+  animation: slideInFromLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 90ms) both;
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =============================================
+   Timeline Item Structure
+   ============================================= */
+.timeline-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 24px;
+  will-change: transform, opacity;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  flex-shrink: 0;
+  transition: var(--transition);
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-dot.current {
+  background: var(--purple-primary);
+  border-color: var(--purple-light);
+  box-shadow: 0 0 12px var(--purple-glow);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  min-height: 40px;
+  background: linear-gradient(to bottom, var(--border-color), transparent);
+  margin-top: 8px;
+}
+
+/* Timeline Content Card */
+.timeline-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.timeline-content:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-purple);
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.timeline-role {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.timeline-company {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-name {
+  color: var(--purple-light);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Green Badges */
+.current-badge {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #22c55e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ongoing-badge {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.55);
+  color: #22c55e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+}
+
+/* Pulsing Green Dot */
+.badge-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+  animation: greenDotPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes greenDotPulse {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.timeline-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.timeline-period {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.timeline-type {
+  background: rgba(147, 51, 234, 0.12);
+  border: 1px solid var(--border-color);
+  color: var(--purple-light);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.timeline-description {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.timeline-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .timeline-item {
+    grid-template-columns: 24px 1fr;
+    gap: 16px;
+  }
+
+  .timeline-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .timeline-header {
+    flex-direction: column;
+  }
+
+  .timeline-meta {
+    align-items: flex-start;
+  }
+
+  .tab-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .tab-pill {
+    transition: none;
+  }
+
+  .timeline-container-wrap {
+    transition: none;
+  }
+
+  .badge-pulse-dot {
+    animation: none;
+  }
+
+  .timeline.anim-exiting .timeline-item {
+    transform: none !important;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .timeline.anim-entering .timeline-item {
+    animation: simpleCrossfade 0.2s ease both !important;
+    transform: none !important;
+  }
+}
+
+@keyframes simpleCrossfade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

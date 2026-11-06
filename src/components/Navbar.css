@@ -1,0 +1,299 @@
+/* =============================================
+   Navbar Styles — TARGET DESIGN
+   ============================================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 24px 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  animation: navbarSlideDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes navbarSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar.scrolled {
+  background: rgba(5, 3, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand Text */
+.navbar-logo {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar-logo:hover {
+  transform: translateY(-1px);
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.logo-accent {
+  color: var(--purple, #a855f7);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.logo-text:hover {
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+}
+
+.logo-text:hover .logo-accent {
+  color: var(--purple-light, #c084fc);
+  text-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
+}
+
+/* Right Links — 5 items fit with clamp gap */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.2vw, 20px);
+}
+
+/* Nav link base — shared easing from --ease-premium */
+.nav-link {
+  position: relative;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 100px;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: clamp(11.5px, 1.1vw, 13.5px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: clamp(5px, 0.5vw, 7px) clamp(10px, 1.2vw, 16px);
+  cursor: pointer;
+  /* Premium easing for all hover properties */
+  transition:
+    border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Nav hover — premium lift + glow + border + bg */
+.nav-link:hover {
+  border-color: #a855f7;
+  color: #c084fc;
+  background-color: rgba(168, 85, 247, 0.12);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.25);
+  transform: translateY(-2px) scale(1);
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
+/* Active state — keeps border and purple, smooth transition */
+.nav-link.active {
+  border-color: #a855f7;
+  color: #c084fc;
+  background-color: rgba(168, 85, 247, 0.10);
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
+/* Focus-visible keyboard style */
+.nav-link:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 3px;
+}
+
+/* Active press */
+.nav-link:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+/* Animated Experience / Education Nav Item */
+.nav-label-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(78px, 8vw, 96px);
+  height: 1.3em;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.nav-label-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.nav-label-exit {
+  position: absolute;
+  animation: navSlideUpExit 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.nav-label-enter {
+  animation: navSlideUpEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes navSlideUpExit {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes navSlideUpEnter {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Hamburger menu button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1002;
+  transition: border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s ease;
+}
+
+.hamburger:hover {
+  border-color: #a855f7;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+  background: var(--purple);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+  background: var(--purple);
+}
+
+/* Mobile responsive navigation with slide-in animation */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 78%;
+    max-width: 320px;
+    height: 100vh;
+    background: rgba(5, 3, 15, 0.96);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+    padding: 24px;
+  }
+
+  .navbar-links.open {
+    right: 0;
+  }
+
+  .nav-link {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+
+  .nav-label-container {
+    min-width: 105px;
+  }
+}
+
+/* At 1024px — 5 items still fit cleanly */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .navbar-links {
+    gap: clamp(2px, 0.8vw, 12px);
+  }
+
+  .nav-link {
+    font-size: clamp(11px, 1vw, 13px);
+    padding: 5px 10px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link {
+    transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    transform: none;
+    box-shadow: none;
+  }
+}
